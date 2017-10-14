@@ -1,0 +1,107 @@
+import random
+
+#Random card given
+def userHand():
+        card = random.randint (1, 11)
+        return card
+
+#User evaluates cards and decdides whether to play or not 
+def totalValue():
+        total = sum(hand)
+        if total > 21 :
+               print "Sorry you passed 21, Play Again \n"
+                        
+        elif total == 21:
+                print 'You got 21! '
+
+        else:
+                print total
+                response = raw_input("Would you like another card? y/n:  ")
+                print '\n'
+                while response == 'y':
+                        newcard = userHand()
+                        hand.append(newcard)
+                        total = sum(hand)
+                        print 'Hand: ',hand, 'Score:', total
+                        if total > 21:    
+                                print '\n', "Sorry you passed 21, Play Again :( \n"
+                                response = 'n'
+                                exit
+                                
+                        elif total == 21:
+                                print 'You got 21!:  ', total 
+                                response = 'n'
+                                break
+                        else:
+                                totalValue()
+                                return response, total
+                                
+
+                else: return total 
+        total = sum(hand)
+        return total
+
+#The dealer plays hand against the user
+def dealersHand():
+        dealTotal = sum(dealHand)
+        dealersCard = userHand()
+        dealHand.append(dealersCard)
+        dealTotal = sum(dealHand)
+        print 'Dealers Hand: ', dealHand, '=', dealTotal
+        if dealTotal > 21:
+                print 'Dealer passed 21, Dealer loses '
+                return dealTotal
+                
+        if dealTotal == 21:
+                print 'Dealer Wins, score: ', dealTotal
+                return dealTotal
+                
+        return dealTotal
+        
+        
+# BEGINING of CODE 
+hand = [ ]
+cardOne = userHand()
+hand.append(cardOne)
+cardTwo = userHand()
+hand.append(cardTwo)
+total = 0
+total = sum(hand)
+
+dealHand = [ ] 
+dealersCard = userHand()
+dealHand.append(dealersCard)
+dealersCard = userHand()
+dealHand.append(dealersCard)
+dealTotal = 0
+dealTotal = sum(dealHand)
+
+print 'Your hand: ', hand, 'Score: ', total
+totalValue()
+total = sum(hand)
+print 'Dealer Hand:', dealHand
+if dealTotal < 16:
+        if dealTotal > total:
+                #I have fixed up to here for sure
+                print 'Dealer Wins'
+                exit
+        while (dealTotal<= 17) & (total < 21):
+                dealTotal = sum(dealHand)
+                if dealTotal == 21:
+                        exit
+                if dealTotal > 21:
+                        exit
+                while (dealTotal < total) and (dealTotal <17):
+                        dealersHand()
+                        break
+                else: 
+                        print ' '
+else:
+        pass
+total = sum(hand)
+dealTotal = sum(dealHand)
+if total < 21 and (dealTotal <21 ):
+        if total > dealTotal:
+                print 'User Wins: ', total , 'Dealer: ', dealTotal
+        else:
+                print 'Dealer Wins ...', dealTotal, 'User: ', total
